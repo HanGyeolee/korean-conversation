@@ -9,7 +9,7 @@
 mecab 클래스를 약간 수정하여 "+" 된 어절을 전부 분리하도록 하였습니다.    
 [mecab/mecab_tokenizer.py](https://github.com/HanGyeolee/korean-conversation/blob/main/mecab/mecab_tokenizer.py)를 통해 분리된 형태소들을 토크나이징할 수 있습니다.
 
-vocab.txt에 들어간 전체 어휘의 개수는 816287개 입니다.
+vocab.txt에 들어간 전체 어휘의 개수는 816288개 입니다.
 
 <b>Ex)</b>    
 > 경기 성남시 판교신도시에서 이달 분양하는 중대형 아파트의 3.3m²당 분양가가 2006년보다 200만 원 정도 싼 1500만 원 후반대로 결정될 것으로 보인다.
