@@ -14,8 +14,9 @@ class Mecab_Tokenizer():
     info: 정보    
     token: 토크나이즈된 문장
     """
-    def __init__(self, dicpath='', allattrs=False):
+    def __init__(self, dicpath='', update=False):
         self.dicpath = dicpath
+        self.update = update
         self.__mecab = Mecab(dicpath=r"C:\mecab\mecab-ko-dic")
         try:
             f = open(dicpath, 'r', encoding='utf-8')
@@ -45,7 +46,7 @@ class Mecab_Tokenizer():
                 result = self.__dict[v]
                 return [v, result]
             except :
-                if False & ('ㅓ/EC' not in v):
+                if self.update & ('ㅓ/EC' not in v):
                     f = open(self.dicpath, 'a', encoding='utf-8')
                     f.write(v +'\n')
                     f.close()

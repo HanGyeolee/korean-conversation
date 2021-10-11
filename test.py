@@ -9,7 +9,7 @@ string = input()
 
 from mecab.mecab_tokenizer import Mecab_Tokenizer
 
-tokenizer = Mecab_Tokenizer(dicpath=r'vocab.txt')
+tokenizer = Mecab_Tokenizer(dicpath=r'vocab.txt', update=True)
 
 tokenizer.tokenizing(string, allattrs=True)
 print(tokenizer.inputstring)
