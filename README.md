@@ -23,3 +23,5 @@ vocab.txt에 들어간 전체 어휘의 개수는 816288개 입니다.
   816266, 816285, 206811, 191746, 771756, 816286, 765791
 ]
 ```
+
+[test.py의 result](https://github.com/HanGyeolee/korean-conversation/blob/main/test.py#L38) 값에 따라 반환되는 형태를 변경할 수 있으니 여러가지로 활용해볼 수 있겠다.
