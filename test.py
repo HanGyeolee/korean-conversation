@@ -4,8 +4,8 @@ Created on Sun Oct 10 11:34:04 2021
 
 @author: Han
 """
-from mecab_custom import Mecab
-from mecab_tokenizer import Mecab_Tokenizer
+from mecab.mecab_custom import Mecab
+from mecab.mecab_tokenizer import Mecab_Tokenizer
 
 tokenizer = Mecab_Tokenizer(dicpath=r'vocab.txt')
 mecab = Mecab(dicpath=r"C:\mecab\mecab-ko-dic")
