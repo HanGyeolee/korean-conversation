@@ -4,12 +4,19 @@ Created on Sun Oct 10 12:22:19 2021
 
 @author: Han
 """
+from mecab.mecab_custom import Mecab
 
 class Mecab_Tokenizer():
     """Tokenizer with Mecab.
+    
+    inputstring: 입력된 문장    
+    morpheme: 형태소     
+    info: 정보    
+    token: 토크나이즈된 문장
     """
     def __init__(self, dicpath=''):
         self.dicpath = dicpath
+        self.__mecab = Mecab(dicpath=r"C:\mecab\mecab-ko-dic")
         try:
             f = open(dicpath, 'r', encoding='utf-8')
             lines = f.readlines()
@@ -24,7 +31,7 @@ class Mecab_Tokenizer():
         except FileNotFoundError:
             raise Exception('file does not exist at "%s".' % dicpath)
             
-    def tokenizing(self, v):
+    def __match(self, v):
         """Tokenizer.
 
         :param v: vocab.
@@ -46,5 +53,36 @@ class Mecab_Tokenizer():
                     self.__index += 1
                     self.__dict[v] = self.__index
                         
-                    return self.__index
+                    return [v, self.__index]
                 return [v, -1]
+    
+    def tokenizing(self, string):
+        if string != "":
+            self.morpheme = self.__mecab.pos(string, join=True)
+            self.splited_morpheme = self.__mecab.pos(string, join=True)
+            self.inputstring = string
+            
+            for index, value in enumerate(self.splited_morpheme):
+                if '+' in value:
+                    value = value.split('/',1)[1]
+                    forinsert = value.split('+')
+                    idx = index
+                    for insert in forinsert:
+                        tmp = insert.split('/')
+                        try:
+                            if idx == index:
+                                self.splited_morpheme[idx] = tmp[0] + '/' + tmp[1]
+                            else:
+                                self.splited_morpheme.insert(idx, tmp[0] + '/' + tmp[1])
+                        except IndexError:
+                            self.splited_morpheme.append(tmp[0] + '/' + tmp[1])
+                        idx += 1
+            
+            self.whole = [self.__match(inner) for inner in self.splited_morpheme]
+        
+            self.tokens = [data[1] for data in self.whole]
+            
+            return self.whole
+        else:
+            print("입력이 없습니다.")
+            return
