@@ -1,0 +1,5 @@
+# link
+*.lnk
+
+#cache
+__pycache__/

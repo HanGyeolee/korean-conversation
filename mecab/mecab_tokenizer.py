@@ -14,7 +14,7 @@ class Mecab_Tokenizer():
     info: 정보    
     token: 토크나이즈된 문장
     """
-    def __init__(self, dicpath=''):
+    def __init__(self, dicpath='', allattrs=False):
         self.dicpath = dicpath
         self.__mecab = Mecab(dicpath=r"C:\mecab\mecab-ko-dic")
         try:
@@ -37,7 +37,7 @@ class Mecab_Tokenizer():
         :param v: vocab.
         """
         try:
-            tmp = int(v.split("/")[0])
+            int(v.split("/")[0])
             result = self.__dict["${number}/SN"] # 숫자는 다 묶어서 같은 토큰으로 친다.
             return [v, result]
         except ValueError:
@@ -56,9 +56,9 @@ class Mecab_Tokenizer():
                     return [v, self.__index]
                 return [v, -1]
     
-    def tokenizing(self, string):
+    def tokenizing(self, string, allattrs=False):
         if string != "":
-            self.morpheme = self.__mecab.pos(string, join=True)
+            self.morpheme = self.__mecab.pos(string, join=True, allattrs=allattrs)
             self.splited_morpheme = self.__mecab.pos(string, join=True)
             self.inputstring = string
             
