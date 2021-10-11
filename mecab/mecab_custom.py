@@ -1,11 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Oct 11 01:55:29 2021
-
-@author: Han
-"""
-
-# -*- coding: utf-8 -*-
 from __future__ import absolute_import
 
 import sys
