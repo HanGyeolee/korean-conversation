@@ -37,3 +37,6 @@ print(morpheme)
 
 result = [tokenizer.tokenizing(inner) for inner in morpheme]
 print(result)
+
+result = [data[1] for data in result]
+print(result)

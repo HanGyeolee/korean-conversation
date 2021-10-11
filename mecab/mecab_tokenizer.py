@@ -32,11 +32,11 @@ class Mecab_Tokenizer():
         try:
             tmp = int(v.split("/")[0])
             result = self.__dict["${number}/SN"] # 숫자는 다 묶어서 같은 토큰으로 친다.
-            return (v, result)
+            return [v, result]
         except ValueError:
             try:
                 result = self.__dict[v]
-                return (v, result)
+                return [v, result]
             except :
                 if False & ('ㅓ/EC' not in v):
                     f = open(self.dicpath, 'a', encoding='utf-8')
@@ -47,4 +47,4 @@ class Mecab_Tokenizer():
                     self.__dict[v] = self.__index
                         
                     return self.__index
-                return (v, -1)
+                return [v, -1]
