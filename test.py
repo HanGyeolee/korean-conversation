@@ -14,9 +14,9 @@ from mecab.mecab_tokenizer import Mecab_Tokenizer
 
 tokenizer = Mecab_Tokenizer(dicpath=r'vocab.txt', update=False)
 
-tokenizer.tokenizing(string, allattrs=True)
+tokenizer.spliter(string, allattrs=True)
 #print(tokenizer.inputstring)
-#print(tokenizer.morpheme)
+print(tokenizer.morpheme)
 print(tokenizer.splited_morpheme)
 #print(tokenizer.whole)
 #print(tokenizer.tokens)

@@ -56,8 +56,7 @@ class Mecab_Tokenizer():
                         
                     return [v, self.__index]
                 return [v, -1]
-    
-    def tokenizing(self, string, allattrs=False):
+    def spliter(self, string, allattrs=False):
         if string != "":
             self.morpheme = self.__mecab.pos(string, join=True, allattrs=allattrs)
             self.splited_morpheme = self.__mecab.pos(string, join=True)
@@ -78,12 +77,14 @@ class Mecab_Tokenizer():
                         except IndexError:
                             self.splited_morpheme.append(tmp[0] + '/' + tmp[1])
                         idx += 1
-            
-            self.whole = [self.__match(inner) for inner in self.splited_morpheme]
-        
-            self.tokens = [data[1] for data in self.whole]
-            
-            return self.whole
         else:
             print("입력이 없습니다.")
-            return
+        
+    def tokenizing(self, string, allattrs=False):
+        if string != "":
+            self.spliter(string, allattrs)
+            
+            self.whole = [self.__match(inner) for inner in self.splited_morpheme]
+            self.tokens = [data[1] for data in self.whole]
+        else:
+            print("입력이 없습니다.")
