@@ -1,6 +1,9 @@
 # korean-conversation
 한국어 대화를 진행하는 인공지능을 개발하고자 시도 중인 취미 프로젝트입니다.
 
+* [Update](#update)
+
+## Update
 ### 21.10.12
 POSTagger 뿐아니라 문장의 주요소를 태깅하여 쉽게 정보를 뽑아오도록 하려고 STRUCTagger를 만드는 중입니다.    
 LSTM을 이용하여 양방향 태깅을 위한 시퀀스 레이블링을 따라 구현해보았습니다.    
@@ -9,15 +12,21 @@ LSTM을 이용하여 양방향 태깅을 위한 시퀀스 레이블링을 따라
 따라서 [StructrueDataset](https://github.com/HanGyeolee/korean-conversation/blob/main/structure/structure.py#L25)은 두번째 사이트를 보고 구현하였고, [RNNSTRUCTagger](https://github.com/HanGyeolee/korean-conversation/blob/main/structure/structure.py#L64)는 첫번째 사이트를 보고 따라한 것 입니다.    
 
 주요소에 사용되는 태그들은 다음과 같습니다.
+* 중요도 높음
+
 |V|S|T|Wy|
 |:---:|:---:|:---:|:---:|
-|서술어|주어|언제|왜|
+|서술어|주어|시간|이유|
+    
+* 중요도 낮음  
+ 
 |WS|WE|DO|IO|H|Wi|EOF|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |어디에서|어디까지|직접목적어|간접목적어|어떻게|누구와|./?/!|
 
 문장 속 형태소 최대 개수는 512개로 제한하였습니다.    
 데이터 셋을 만들다가 부족하다싶으면 더 늘려볼 생각입니다.
+<hr/>
 
 ### 21.10.10
 형태소를 뽑아내는 데에 [KoNLPy](https://konlpy.org/ko/latest/) Mecab 클래스를 사용하였습니다.    
