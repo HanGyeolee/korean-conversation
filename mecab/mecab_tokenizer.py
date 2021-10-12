@@ -32,6 +32,12 @@ class Mecab_Tokenizer():
         except FileNotFoundError:
             raise Exception('file does not exist at "%s".' % dicpath)
             
+    def getMax(self):
+        return self.__index
+    
+    def getDict(self):
+        return self.__dict
+            
     def __match(self, v):
         """Tokenizer.
 
