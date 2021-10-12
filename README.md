@@ -8,7 +8,7 @@
 |GPU|NVIDIA GeForce RTX 3070 8G|
 |RAM|GSkill DDR4-3600 16GB * 2|
 
-## List
+## Table
 * [Update](#update)
 
 ## Update
