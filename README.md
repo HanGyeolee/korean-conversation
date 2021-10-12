@@ -9,9 +9,12 @@ LSTM을 이용하여 양방향 태깅을 위한 시퀀스 레이블링을 따라
 따라서 [StructrueDataset](https://github.com/HanGyeolee/korean-conversation/blob/main/structure/structure.py#L25)은 두번째 사이트를 보고 구현하였고, [RNNSTRUCTagger](https://github.com/HanGyeolee/korean-conversation/blob/main/structure/structure.py#L64)는 첫번째 사이트를 보고 따라한 것 입니다.    
 
 주요소에 사용되는 태그들은 다음과 같습니다.
-|V|S|T|Wy|WS|WE|DO|IO|H|Wi|EOF|
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|<small>서술어</small>|주어|언제|왜|어디에서|어디까지|직접목적어|간접목적어|어떻게|누구와|./?/!|
+|V|S|T|Wy|
+|:---:|:---:|:---:|:---:|
+|서술어|주어|언제|왜|
+|WS|WE|DO|IO|H|Wi|EOF|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|어디에서|어디까지|직접목적어|간접목적어|어떻게|누구와|./?/!|
 
 문장 속 형태소 최대 개수는 512개로 제한하였습니다.    
 데이터 셋을 만들다가 부족하다싶으면 더 늘려볼 생각입니다.
