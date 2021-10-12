@@ -23,20 +23,21 @@ from mecab.mecab_tokenizer import Mecab_Tokenizer
 #Geforce 3070 need >cuda11.1
 
 class StructrueDataset(Dataset):
-    def __init__(self, csv_file, tokenizer=None):
+    def __init__(self, csv_file, tokenizer=None, maxsize=512):
         self.datas = pd.read_csv(csv_file)
         self.tokenizer = tokenizer
+        self.maxsize = maxsize
         self.dict_main_element = {'EOF':1,'V':2,'S':3,'T':4,'Wy':5,'WS':6,'WE':7,'DO':8,'IO':9,'H':10,'Wi':11}
     
     def __len__(self):
         return len(self.datas)
     
-    def __getitem__(self, idx, maxsize=512):
+    def __getitem__(self, idx):
         if torch.is_tensor(idx):
             idx = idx.tolist()
         
         length = int(self.datas.iloc[idx, 4])
-        if length>512: return
+        if length>self.maxsize: return
         
         texts = ast.literal_eval(self.datas.iloc[idx, 0])
         result = ast.literal_eval(self.datas.iloc[idx, 1])
@@ -48,7 +49,7 @@ class StructrueDataset(Dataset):
             sample['text'] = self.tokenizer.tokens
             sample['result'] = [self.dict_main_element[char] for char in sample['result']]
             
-        blank = [0]*(512-length)
+        blank = [0]*(self.maxsize-length)
         
         sample['text'] += blank
         sample['result'] += blank
@@ -100,9 +101,9 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 tokenizer = Mecab_Tokenizer(dicpath=r'../vocab.txt', update=False)
 
-train_data = StructrueDataset(csv_file='stru_train_dataset.csv', tokenizer=tokenizer)
-#valid_data = StructrueDataset(csv_file='stru_valid_dataset.csv', tokenizer=tokenizer)
-#test_data = StructrueDataset(csv_file='stru_test_dataset.csv', tokenizer=tokenizer)
+train_data = StructrueDataset(maxsize=INPUT_DIM, csv_file='stru_train_dataset.csv', tokenizer=tokenizer)
+#valid_data = StructrueDataset(maxsize=INPUT_DIM, csv_file='stru_valid_dataset.csv', tokenizer=tokenizer)
+#test_data = StructrueDataset(maxsize=INPUT_DIM, csv_file='stru_test_dataset.csv', tokenizer=tokenizer)
 
 dataloader = DataLoader(train_data, batch_size=64, shuffle=True, num_workers=0)
 
@@ -115,12 +116,12 @@ model = RNNSTRUCTagger(INPUT_DIM,
                      DROPOUT)
 
 optimizer = optim.Adam(model.parameters())
-criterion = nn.CrossEntropyLoss(ignore_index=[765795, 765792, 765788])
+criterion = nn.CrossEntropyLoss(ignore_index=0)
 
 model = model.to(device)
 criterion = criterion.to(device)
 
-prediction = model(dataloader[0]['text'])
+prediction = model(dataloader)
 print(prediction.shape)
 
 
