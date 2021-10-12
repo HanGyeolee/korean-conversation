@@ -20,10 +20,10 @@ def parse(result, allattrs=False, join=False):
         s, t = elem.split('\t')
         if join:
             splited = t.split(',')
-            return s + '/' + (splited[0] if ('+' not in splited[7]) or (splited[4] != "Inflected") else splited[7])
+            return s + '/' + (splited[0] if ('+' not in splited[7]) or (splited[4] != "Inflect") else splited[7])
         else:
             splited = t.split(',')
-            return (s, splited[0]) if ('+' not in splited[7]) or (splited[4] != "Inflected") else (s, splited[7])
+            return (s, splited[0]) if ('+' not in splited[7]) or (splited[4] != "Inflect") else (s, splited[7])
     def attrs(elem, join=False):
         if not elem: return ('', 'SY')
         s, t = elem.split('\t')

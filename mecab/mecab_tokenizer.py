@@ -25,8 +25,8 @@ class Mecab_Tokenizer():
             self.__dict = {}
             
             for index, line in enumerate(lines): #list 보다 dictionary의 query 속도가 빠르다.
-                self.__dict[line] = index
-                self.__index = index
+                self.__dict[line] = index+1
+                self.__index = index+1
                 
             f.close()
         except FileNotFoundError:
@@ -43,6 +43,7 @@ class Mecab_Tokenizer():
             return [v, result]
         except ValueError:
             try:
+                tmpp = self.__dict
                 result = self.__dict[v]
                 return [v, result]
             except :
@@ -80,11 +81,16 @@ class Mecab_Tokenizer():
         else:
             print("입력이 없습니다.")
         
-    def tokenizing(self, string, allattrs=False):
+    def tokenizing(self, string, allattrs=False, justToken=False):
         if string != "":
-            self.spliter(string, allattrs)
-            
-            self.whole = [self.__match(inner) for inner in self.splited_morpheme]
-            self.tokens = [data[1] for data in self.whole]
+            if justToken:
+                self.splited_morpheme = string
+                self.whole = [self.__match(inner) for inner in self.splited_morpheme]
+                self.tokens = [data[1] for data in self.whole]
+            else:
+                self.spliter(string, allattrs)
+                
+                self.whole = [self.__match(inner) for inner in self.splited_morpheme]
+                self.tokens = [data[1] for data in self.whole]
         else:
             print("입력이 없습니다.")

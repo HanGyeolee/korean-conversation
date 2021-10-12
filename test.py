@@ -14,13 +14,14 @@ from mecab.mecab_tokenizer import Mecab_Tokenizer
 
 tokenizer = Mecab_Tokenizer(dicpath=r'vocab.txt', update=False)
 
-tokenizer.spliter(string, allattrs=True)
+tokenizer.tokenizing(string, allattrs=True)
+#tokenizer.spliter(string, allattrs=True)
 #print(tokenizer.inputstring)
-print(tokenizer.morpheme)
-print(tokenizer.splited_morpheme)
-#print(tokenizer.whole)
+#print(tokenizer.morpheme)
+#print(tokenizer.splited_morpheme)
+print(tokenizer.whole)
 #print(tokenizer.tokens)
-print(now.strftime('%Y.%m.%d.%H:%M:%S.%f'))
+print(now.strftime('%Y.%m.%d.%w.%H:%M:%S.%f'))
 
 
 """

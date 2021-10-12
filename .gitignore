@@ -3,3 +3,6 @@
 
 #cache
 *.pyc
+
+#excel
+*.xlsx
