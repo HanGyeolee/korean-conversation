@@ -1,6 +1,21 @@
 # korean-conversation
 한국어 대화를 진행하는 인공지능을 개발하고자 시도 중인 취미 프로젝트입니다.
 
+### 21.10.12
+POSTagger 뿐아니라 문장의 주요소를 태깅하여 쉽게 정보를 뽑아오도록 하려고 STRUCTagger를 만드는 중입니다.    
+LSTM을 이용하여 양방향 태깅을 위한 시퀀스 레이블링을 따라 구현해보았습니다.    
+참고한 사이트는 [02. 양방향 RNN을 이용한 품사 태깅](https://wikidocs.net/66747)과 [사용자 정의 DATASET, DATALOADER, TRANSFORMS 작성하기](https://tutorials.pytorch.kr/beginner/data_loading_tutorial.html)입니다.    
+첫 사이트에서는 품사 태깅을 할 때 어떤 식으로 인공지능이 작성되는 지에 대한 정보를 얻기 위함이고, 두번째 사이트에서는 직접 만든 데이터 셋을 어떻게 불러오고, 배치사이즈를 정하고 사용할 준비를 하기 위한 정보를 얻기 위함입니다.    
+따라서 [StructrueDataset](https://github.com/HanGyeolee/korean-conversation/blob/main/structure/structure.py#L25)은 두번째 사이트를 보고 구현하였고, [RNNSTRUCTagger](https://github.com/HanGyeolee/korean-conversation/blob/main/structure/structure.py#L64)는 첫번째 사이트를 보고 따라한 것 입니다.    
+
+주요소에 사용되는 태그들은 다음과 같습니다.
+|서술어|주어|언제|왜|어디에서|어디까지|직접목적어|간접목적어|어떻게|누구와|./?/!|
+|---|---|---|---|---|---|---|---|---|---|---|
+|V|S|T|Wy|WS|WE|DO|IO|H|Wi|EOF|
+
+문장 속 형태소 최대 개수는 512개로 제한하였습니다.    
+데이터 셋을 만들다가 부족하다싶으면 더 늘려볼 생각입니다.
+
 ### 21.10.10
 형태소를 뽑아내는 데에 [KoNLPy](https://konlpy.org/ko/latest/) Mecab 클래스를 사용하였습니다.    
 mecab 클래스를 약간 수정하여 "+" 된 어절을 전부 분리하도록 하였습니다.    
