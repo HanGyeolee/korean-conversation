@@ -13,12 +13,34 @@
 * [Update](#update)
 
 ## Update
+### 21.10.13
+[ELEMENTagger](https://github.com/HanGyeolee/korean-conversation/blob/main/mecab/ko/elemen.py)는 문장의 주요소를 추가로 태깅해줍니다.    
+``` python
+from mecab.ko.tokenizer import Tokenizer
+from mecab.ko.elemen import ELEMENTagger
+
+tokenizer = Tokenizer(dicpath=r'vocab.txt', update=False) 
+tokenizer.tokenizing(string, allattrs=False) #토큰 생성
+
+elementagger = ELEMENTagger(ptpath="~~.pt")
+elementagger.getElement(tokenizer.tokens) #주요소 추출
+```
+
+[공식 튜토리얼 사이트](https://pytorch.org/tutorials/beginner/nlp/sequence_models_tutorial.html)를 참고하여 학습기를 완성시켰습니다.    
+아직 데이터셋이 부족하여, Loss 가 2 이상 발생하는 중입니다. (말뭉치를 요청하여 데이터 구축을 준비하는 중입니다.)    
+
+|항목|데이터셋 예시|
+|:---:|:---|
+|text| 	&#91;'밖/NNG', '에/JKB', '비오/VV', 'ㅏ/EF', '?/SF'&#93; |
+|element|	&#91;'WS', 'WS', 'V', 'V', 'EOF'&#93;|
+|start|	&#91;1, 1, 3, 3, 5&#93;|
+|end|	&#91;2, 2, 4, 4, 5&#93;|
+|length|5|
+
 ### 21.10.12
-POSTagger 뿐아니라 문장의 주요소를 태깅하여 쉽게 정보를 뽑아오도록 하려고 STRUCTagger를 만드는 중입니다.    
+POSTagger 뿐아니라 문장의 주요소를 태깅하여 쉽게 정보를 뽑아오도록 하려고 ELEMENTagger를 만드는 중입니다.    
 LSTM을 이용하여 양방향 태깅을 위한 시퀀스 레이블링을 따라 구현해보았습니다.    
 참고한 사이트는 [02. 양방향 RNN을 이용한 품사 태깅](https://wikidocs.net/66747)과 [사용자 정의 DATASET, DATALOADER, TRANSFORMS 작성하기](https://tutorials.pytorch.kr/beginner/data_loading_tutorial.html)입니다.    
-첫 사이트에서는 품사 태깅을 할 때 어떤 식으로 인공지능이 작성되는 지에 대한 정보를 얻기 위함이고, 두번째 사이트에서는 직접 만든 데이터 셋을 어떻게 불러오고, 배치사이즈를 정하고 사용할 준비를 하기 위한 정보를 얻기 위함입니다.    
-따라서 [StructrueDataset](https://github.com/HanGyeolee/korean-conversation/blob/main/structure/structure.py#L25)은 두번째 사이트를 보고 구현하였고, [RNNSTRUCTagger](https://github.com/HanGyeolee/korean-conversation/blob/main/structure/structure.py#L64)는 첫번째 사이트를 보고 따라한 것 입니다.    
 
 주요소에 사용되는 태그들은 다음과 같습니다.
 * 중요도 높음
@@ -31,7 +53,7 @@ LSTM을 이용하여 양방향 태깅을 위한 시퀀스 레이블링을 따라
  
 |WS|WE|DO|IO|H|Wi|EOF|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|어디에서|어디까지|직접목적어|간접목적어|어떻게|누구와|./?/!|
+|어디에서|어디로|직접목적어|간접목적어|어떻게|누구와|./?/!|
 
 문장 속 형태소 최대 개수는 512개로 제한하였습니다.    
 데이터 셋을 만들다가 부족하다싶으면 더 늘려볼 생각입니다.
