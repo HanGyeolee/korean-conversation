@@ -11,7 +11,7 @@ class ELEMENTagger():
     
     """
     def __init__(self, ptpath='model_result.pt'):
-        self.model_result = torch.load(ptpath)
+        self.model_result = torch.load(ptpath).cuda()
         self.dict_element = {1:'EOF',2:'V',3:'S',4:'T',5:'Wy',6:'WS',7:'WE',8:'DO',9:'IO',10:'H',11:'Wi'}
  
     def getElement(self, tokens):
@@ -19,7 +19,7 @@ class ELEMENTagger():
         
         :param tokens: token from mecab_tokenizer
         """
-        prediction = self.model_result(torch.tensor(tokens, dtype=torch.long))
+        prediction = self.model_result(torch.tensor(tokens, dtype=torch.long).cuda())
         
         structure = prediction.tolist()
         for i, sub in enumerate(structure):

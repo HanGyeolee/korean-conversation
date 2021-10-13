@@ -10,3 +10,4 @@
 
 # ai
 *.pt
+mecab/ko/tagger_creater.py
