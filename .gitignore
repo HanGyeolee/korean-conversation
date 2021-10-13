@@ -6,3 +6,7 @@
 
 #excel
 *.xlsx
+*.csv
+
+# ai
+*.pt

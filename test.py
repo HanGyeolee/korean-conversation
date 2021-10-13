@@ -5,24 +5,27 @@ Created on Sun Oct 10 11:34:04 2021
 @author: Han
 """
 import datetime
+from mecab.ko.tokenizer import Tokenizer
+from mecab.ko.elemen import ELEMENTagger
+
 now = datetime.datetime.now()
 
 string = input()
+print(now.strftime('%Y.%m.%d.%w.%H:%M:%S.%f'))
 
-from mecab.mecab_tokenizer import Mecab_Tokenizer
 
-
-tokenizer = Mecab_Tokenizer(dicpath=r'vocab.txt', update=False)
+tokenizer = Tokenizer(dicpath=r'vocab.txt', update=False)
 
 tokenizer.tokenizing(string, allattrs=False)
 #tokenizer.spliter(string, allattrs=True)
 #print(tokenizer.inputstring)
 #print(tokenizer.morpheme)
 #print(tokenizer.splited_morpheme)
-print(tokenizer.whole)
+#print(tokenizer.whole)
 #print(tokenizer.tokens)
-print(now.strftime('%Y.%m.%d.%w.%H:%M:%S.%f'))
 
+elementagger = ELEMENTagger(ptpath=u"mecab/ko/model_result.pt")
+print(elementagger.getElement(tokenizer.tokens))
 
 """
 from konlpy.tag import Okt
