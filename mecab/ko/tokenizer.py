@@ -4,7 +4,15 @@ Created on Sun Oct 10 12:22:19 2021
 
 @author: Han
 """
-import mecab_custom
+from __future__ import absolute_import
+
+try:
+    from mecab_custom import Mecab
+except ImportError:
+    from .mecab_custom import Mecab
+    pass
+    
+__all__ = ['Tokenizer']
 
 class Tokenizer():
     """Tokenizer with Mecab.
@@ -17,7 +25,7 @@ class Tokenizer():
     def __init__(self, dicpath='', update=False):
         self.dicpath = dicpath
         self.update = update
-        self.__mecab = mecab_custom.Mecab(dicpath=r"C:\mecab\mecab-ko-dic")
+        self.__mecab = Mecab(dicpath=r"C:\mecab\mecab-ko-dic")
         try:
             f = open(dicpath, 'r', encoding='utf-8')
             lines = f.readlines()

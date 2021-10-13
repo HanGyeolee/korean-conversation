@@ -4,12 +4,16 @@ Created on Wed Oct 13 21:06:14 2021
 
 @author: Han
 """
+from __future__ import absolute_import
+
 import ast
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import pandas as pd
 from torch.utils.data import Dataset
+
+__all__ = ['StructrueDataset', 'LSTMTagger']
 
 class StructrueDataset(Dataset):
     def __init__(self, csv_file, tokenizer=None, maxsize=512): 
@@ -47,7 +51,7 @@ class StructrueDataset(Dataset):
         return (texts, result)#, start, end
         
 class LSTMTagger(nn.Module):
-    def __init__(self, vocab_size, embedding_dim, hidden_dim, output_dim, n_layers, bidirectional, dropout):
+    def __init__(self, vocab_size=0, embedding_dim=20, hidden_dim=8, output_dim=12, n_layers=64, bidirectional=True, dropout = 0.25):
         super(LSTMTagger, self).__init__()
         
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
