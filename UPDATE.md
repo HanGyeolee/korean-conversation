@@ -35,10 +35,10 @@
 from mecab.ko.tokenizer import Tokenizer
 from mecab.ko.elemen import ELEMENTagger
 
-tokenizer = Tokenizer(dicpath=r'vocab.txt', update=False) 
+tokenizer = Tokenizer(dicpath=r'vocab.txt') 
 tokenizer.tokenizing(string, allattrs=False) #토큰 생성
 
-elementagger = ELEMENTagger(ptpath="~~.pt")
+elementagger = ELEMENTagger(ptpath="~~.pt", vocab_size=tokenizer.getMax() + 1)
 elementagger.getElement(tokenizer.tokens) #주요소 추출
 ```
 
