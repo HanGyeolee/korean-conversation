@@ -15,7 +15,7 @@ except ImportError:
 __all__ = ['Tokenizer']
 
 class Tokenizer():
-    """Tokenizer with Mecab.
+    """ElementTokenizer with Mecab.
     
     inputstring: 입력된 문장    
     morpheme: 형태소     
@@ -53,12 +53,18 @@ class Tokenizer():
         """
         try:
             int(v.split("/")[0])
-            result = self.__dict["${number}/SN"] # 숫자는 다 묶어서 같은 토큰으로 친다.
-            return [v, result]
+            return [v, self.__dict["${number}/SN"]] # 숫자는 다 묶어서 같은 토큰으로 친다.
         except ValueError:
             try:
-                result = self.__dict[v]
-                return [v, result]
+                if 'VV' in v: # 동사도 다 묶어서 같은 토큰으로 친다.
+                    return [v, self.__dict["${verb}/VV"]]
+                elif 'VA' in v: # 형용사도 다 묶어서 같은 토큰으로 친다.
+                    return [v, self.__dict["${adverb}/VA"]]
+                elif 'SF' in v: # 종결문자도 다 묶어서 같은 토큰으로 친다.
+                    return [v, self.__dict["${mark}/SF"]]
+                elif 'EF' in v: # 종결어미도 다 묶어서 같은 토큰으로 친다.
+                    return [v, self.__dict["${end}/EF"]]
+                return [v, self.__dict[v]]
             except :
                 if self.update & ('ㅓ/EC' not in v):
                     f = open(self.dicpath, 'a', encoding='utf-8')

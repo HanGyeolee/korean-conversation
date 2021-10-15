@@ -19,11 +19,11 @@ tokenizer.tokenizing(string, allattrs=False)
 #print(tokenizer.inputstring)
 #print(tokenizer.morpheme)
 print(tokenizer.splited_morpheme)
-#print(tokenizer.whole)
+print(tokenizer.whole)
 #print(tokenizer.tokens)
 
-elementagger = Mko.ELEMENTagger(ptpath=u"mecab/ko/model_result.pt")
-print(elementagger.getElement(tokenizer.tokens))
+elementagger = Mko.ELEMENTagger(ptpath=u"mecab/ko/model_result.pt", vocab_size=tokenizer.getMax() + 1)
+#print(elementagger.getElement(tokenizer.tokens))
 
 """
 from konlpy.tag import Okt

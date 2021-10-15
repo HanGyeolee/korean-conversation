@@ -12,3 +12,4 @@
 *.pt
 
 mecab/ko/tagger_creater.py
+mecab/ko/AddData.py
