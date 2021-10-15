@@ -10,4 +10,4 @@
 |RAM|GSkill DDR4-3600 16GB * 2|
 
 ## Table
-* [Update](#update)
+* [Update](https://github.com/HanGyeolee/korean-conversation/blob/main/UPDATE.md)
