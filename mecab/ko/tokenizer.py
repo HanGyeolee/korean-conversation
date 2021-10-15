@@ -59,7 +59,7 @@ class Tokenizer():
                 if 'VV' in v: # 동사도 다 묶어서 같은 토큰으로 친다.
                     return [v, self.__dict["${verb}/VV"]]
                 elif 'VA' in v: # 형용사도 다 묶어서 같은 토큰으로 친다.
-                    return [v, self.__dict["${adverb}/VA"]]
+                    return [v, self.__dict["${adjective}/VA"]]
                 elif 'SF' in v: # 종결문자도 다 묶어서 같은 토큰으로 친다.
                     return [v, self.__dict["${mark}/SF"]]
                 elif 'EF' in v: # 종결어미도 다 묶어서 같은 토큰으로 친다.
