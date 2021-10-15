@@ -15,4 +15,4 @@
 ## Flow
 대화를 분석하는 인공지능 데이터 흐름은 다음과 같습니다.    
 
-![AI](https://user-images.githubusercontent.com/46367614/137429105-8ddac779-a507-4836-926a-c07bd2335667.png)
+![AI](https://user-images.githubusercontent.com/46367614/137432034-2d65fce0-4053-4dfd-bbf8-4250aeaab8ca.png)
