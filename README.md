@@ -11,3 +11,8 @@
 
 ## Table
 * [Update](https://github.com/HanGyeolee/korean-conversation/blob/main/UPDATE.md)
+
+## Flow
+대화를 분석하는 인공지능 데이터 흐름은 다음과 같습니다.    
+
+![AI](https://user-images.githubusercontent.com/46367614/137429105-8ddac779-a507-4836-926a-c07bd2335667.png)
