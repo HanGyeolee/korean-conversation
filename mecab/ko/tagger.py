@@ -51,7 +51,7 @@ class StructrueDataset(Dataset):
         return (texts, result)#, start, end
         
 class LSTMTagger(nn.Module):
-    def __init__(self, vocab_size=0, embedding_dim=20, hidden_dim=8, output_dim=12, n_layers=32, bidirectional=True, dropout = 0.25):
+    def __init__(self, vocab_size=0, embedding_dim=20, hidden_dim=8, output_dim=12, n_layers=64, bidirectional=True, dropout = 0.25):
         super(LSTMTagger, self).__init__()
         
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
