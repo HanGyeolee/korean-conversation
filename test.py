@@ -16,7 +16,7 @@ print(now.strftime('%Y.%m.%d.%w.%H:%M:%S.%f'))
 # 필요 클래스 선언
 tokenizer = Mko.Tokenizer(dicpath=r'vocab.txt', update=False)
 principler = principler.Principler(verbpath=u"mecab/ko/Verb.csv")
-elementagger = Mko.ELEMENTagger(ptpath=u"mecab/ko/model_result.pt", vocab_size=tokenizer.getMax() + 1)
+elementagger = Mko.ELEMENTagger(ptpath=u"mecab/ko/model_result.pt")
 
 # 토크나이징
 tokenizer.tokenizing(string, allattrs=False)

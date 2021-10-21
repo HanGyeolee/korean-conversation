@@ -19,7 +19,7 @@ class ELEMENTagger():
     """Element Tagger with Mecab.
     
     """
-    def __init__(self, vocab_size, ptpath='model_result.pt'):
+    def __init__(self, vocab_size=655360, ptpath='model_result.pt'):
         device = torch.device('cpu')
         self.model_result = LSTMTagger(vocab_size=vocab_size)
         self.model_result.load_state_dict(torch.load(ptpath, map_location=device))
