@@ -19,17 +19,21 @@ class ELEMENTagger():
     """Element Tagger with Mecab.
     
     """
-    def __init__(self, vocab_size=655360, ptpath='model_result.pt'):
+    def __init__(self, vocab_size=655360, ptpath='model_result.pt', maxsize=512):
         device = torch.device('cpu')
+        self.maxsize = maxsize
         self.model_result = LSTMTagger(vocab_size=vocab_size)
-        self.model_result.load_state_dict(torch.load(ptpath, map_location=device))
-        self.dict_element = {0:'EOF',1:'V',2:'S',3:'T',4:'Wy',5:'WS',6:'WE',7:'DO',8:'IO',9:'H',10:'Wi',11:'CO'}
+        checkpoint = torch.load(ptpath, map_location=device)
+        self.model_result.load_state_dict(checkpoint['model_state_dict'])
+        self.dict_element = {0:'', 1:'EOF',2:'V',3:'S',4:'T',5:'Wy',6:'WS',7:'WE',8:'DO',9:'IO',10:'H',11:'Wi',12:'CO'}
  
     def getElement(self, tokens):
         """Element Tagger with Mecab.
         
         :param tokens: token from mecab_tokenizer
         """
+        tokens += [0]*(self.maxsize - tokens.size())
+        
         prediction = self.model_result(torch.tensor(tokens, dtype=torch.long))
         
         structure = prediction.tolist()

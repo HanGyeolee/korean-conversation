@@ -13,15 +13,15 @@ import torch.nn.functional as F
 import pandas as pd
 from torch.utils.data import Dataset
 
-__all__ = ['StructrueDataset', 'LSTMTagger']
+__all__ = ['StructureDataset', 'LSTMTagger']
 
-class StructrueDataset(Dataset):
+class StructureDataset(Dataset):
     def __init__(self, csv_file, tokenizer=None, maxsize=512): 
         self.datas = pd.read_csv(csv_file)
         self.tokenizer = tokenizer
         self.maxsize = maxsize
         
-        self.dict_main_element = {'EOF':0,'V':1,'S':2,'T':3,'Wy':4,'WS':5,'WE':6,'DO':7,'IO':8,'H':9,'Wi':10,'CO':11}
+        self.dict_main_element = {'EOF':1,'V':2,'S':3,'T':4,'Wy':5,'WS':6,'WE':7,'DO':8,'IO':9,'H':10,'Wi':11,'CO':12}
     
     def __len__(self):
         return len(self.datas)
@@ -44,6 +44,10 @@ class StructrueDataset(Dataset):
             texts = self.tokenizer.tokens
         result = [self.dict_main_element[char] for char in result]      
         
+        blank = [0]*(self.maxsize - length)
+        texts += blank
+        result += blank
+        
         texts = torch.tensor(texts, dtype=torch.long).cuda()
         result =  torch.tensor(result, dtype=torch.long).cuda()
         #start = torch.IntTensor(start).cuda()
@@ -51,7 +55,7 @@ class StructrueDataset(Dataset):
         return (texts, result)#, start, end
         
 class LSTMTagger(nn.Module):
-    def __init__(self, vocab_size=0, embedding_dim=20, hidden_dim=8, output_dim=12, n_layers=64, bidirectional=True, dropout = 0.25):
+    def __init__(self, vocab_size=0, embedding_dim=20, hidden_dim=8, output_dim=13, n_layers=64, bidirectional=True, dropout = 0.25):
         super(LSTMTagger, self).__init__()
         
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
