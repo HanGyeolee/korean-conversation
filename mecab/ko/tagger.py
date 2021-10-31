@@ -21,7 +21,7 @@ class StructureDataset(Dataset):
         self.tokenizer = tokenizer
         self.maxsize = maxsize
         
-        self.dict_main_element = {'EOF':1,'V':2,'S':3,'T':4,'Wy':5,'WS':6,'WE':7,'DO':8,'IO':9,'H':10,'Wi':11,'CO':12}
+        self.dict_main_element = {'':0, 'EOF':1,'V':2,'S':3,'T':4,'Wy':5,'WS':6,'WE':7,'DO':8,'IO':9,'H':10,'Wi':11,'CO':12}
     
     def __len__(self):
         return len(self.datas)
@@ -52,7 +52,7 @@ class StructureDataset(Dataset):
         result =  torch.tensor(result, dtype=torch.long).cuda()
         #start = torch.IntTensor(start).cuda()
         #end = torch.IntTensor(end).cuda()
-        return (texts, result)#, start, end
+        return (texts, result, length)#, start, end
         
 class LSTMTagger(nn.Module):
     def __init__(self, vocab_size=0, embedding_dim=20, hidden_dim=8, output_dim=13, n_layers=64, bidirectional=True, dropout = 0.25):

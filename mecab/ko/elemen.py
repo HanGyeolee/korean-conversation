@@ -31,9 +31,7 @@ class ELEMENTagger():
         """Element Tagger with Mecab.
         
         :param tokens: token from mecab_tokenizer
-        """
-        tokens += [0]*(self.maxsize - tokens.size())
-        
+        """        
         prediction = self.model_result(torch.tensor(tokens, dtype=torch.long))
         
         structure = prediction.tolist()
