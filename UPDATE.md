@@ -28,6 +28,7 @@
 |CO|으로/JKB,로/JKB|
 
 방식을 변경한 결과는 다음과 같습니다.
+
 ![image](https://user-images.githubusercontent.com/46367614/147605096-cc1af5bc-ab98-420c-a14d-e9234fe18d50.png)
 
 쿼리가 겹치는 `으로/JKB` `로/JKB` 의 경우는 동사에 필요한 주요소에 따라 결정됩니다.
