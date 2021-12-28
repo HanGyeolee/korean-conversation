@@ -21,7 +21,7 @@ class StructureDataset(Dataset):
         self.tokenizer = tokenizer
         self.maxsize = maxsize
         
-        self.dict_main_element = {'':0, 'EOF':1,'V':2,'S':3,'T':4,'Wy':5,'WS':6,'WE':7,'DO':8,'IO':9,'H':10,'Wi':11,'CO':12}
+        self.dict_main_element = {'':0, 'EOF':1,'V':2,'S':3,'T':4,'Wy':5,'H':6,'WS':7,'WE':8,'DO':9,'IO':10,'Wi':11,'CO':12}
     
     def __len__(self):
         return len(self.datas)

@@ -10,12 +10,13 @@ import principler
 
 now = datetime.datetime.now()
 
+print("입력:")
 string = input()
 print(now.strftime('%Y.%m.%d.%w.%H:%M:%S.%f'))
 
 # 필요 클래스 선언
 tokenizer = Mko.Tokenizer(dicpath=r'vocab.txt', update=False)
-#principler = principler.Principler(verbpath=u"mecab/ko/Verb.csv")
+principler = principler.Principler(verbpath=u"mecab/ko/Verb.csv", elementpath=u"mecab/ko/Element.csv")
 #elementagger = Mko.ELEMENTagger(ptpath=u"mecab/ko/model_result.pt")
 
 # 토크나이징
@@ -28,7 +29,8 @@ print(tokenizer.splited_morpheme)
 #print(tokenizer.tokens)
 
 # 동사를 이용한 정보 배제
-#principle = principler.setVerb(tokenizer.splited_morpheme)
+verb, principle = principler.getMainPartbyVerb(tokenizer.splited_morpheme)
+principler.extractMainPart(principle, tokenizer.splited_morpheme)
 
 # 주요소 태깅
 #element = elementagger.getElement(tokenizer.tokens)
@@ -38,7 +40,7 @@ print(tokenizer.splited_morpheme)
 #principler.fillData(element, tokenizer.splited_morpheme, principle)
 
 #print(element)
-#print(principle)
+print(verb + ":" + str(principle))
 """
 from konlpy.tag import Okt
 
