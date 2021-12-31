@@ -1,6 +1,7 @@
 [README](https://github.com/HanGyeolee/korean-conversation)
 
 # Update
+* [22.01.01](#220101) - 주요소 추출 및 표현 방식 변경
 * [21.12.29](#211229) - 주요소 추출 방식 변경
 * [21.10.26](#211026) - 주요소 태그 모델 출력 13개로 확대
 * [21.10.21](#211021) - 빈 토큰 추가
@@ -9,6 +10,138 @@
 * [21.10.13](#211013) - 주요소 태그 클래스 구현
 * [21.10.12](#211012) - 주요소 태그 형태
 * [21.10.10](#211010) - 토크나이저 클래스 구현
+
+## 22.01.01
+ex) 꽃이 이쁘게 피어있는 것을 가만히 바라보았다.
+
+분해 시
+
+`['꽃/NNG', '이/JKS', '이쁘/VA', '게/EC', '피/VV', '어/EC', '있/VX', '는/ETM', '것/NNB', '을/JKO', '가만히/MAG', '바라보/VV', '았/EP', '다/EF', './SF']`
+
+역순
+
+`['./SF', '다/EF', '았/EP', '바라보/VV', '가만히/MAG', '을/JKO', '것/NNB', '는/ETM', '있/VX', '어/EC', '피/VV', '게/EC', '이쁘/VA', '이/JKS', '꽃/NNG']`
+
+객체 표현
+```JSON
+{
+    "log": "2022.01.01.6.01:56:14.894934",
+    "raw": "꽃이 이쁘게 피어있는 것을 가만히 바라보았다.",
+    "morpheme": ["꽃/NNG", "이/JKS", "이쁘/VA", "게/EC", "피/VV", "어/EC", "있/VX", "는/ETM", "것/NNB", "을/JKO", "가만히/MAG", "바라보/VV", "았/EP", "다/EF", "./SF"],
+    "reversed": ["./SF", "다/EF", "았/EP", "바라보/VV", "가만히/MAG", "을/JKO", "것/NNB", "는/ETM", "있/VX", "어/EC", "피/VV", "게/EC", "이쁘/VA", "이/JKS", "꽃/NNG"],
+    "sentencetype": "statement",
+    "predicate": {
+        "tense": "past",
+        "adj": null,
+        "type": "VV",
+        "word": "바라보",
+        "adv": [
+            {
+                "type": "MAG",
+                "word": "가만히",
+                "adv": null
+            }
+        ],
+        "complement": null,
+        "with": null,
+        "indirectobject": null,
+        "directobject": {
+            "type": "NNB",
+            "word": "것",
+            "adv": [
+                {
+                    "tense": "present",
+                    "adj": {
+                        "type": "VX",
+                        "word": "있",
+                        "adv": null
+                    },
+                    "type": "VV",
+                    "word": "피",
+                    "adv": [
+                        {
+                            "type": "VA",
+                            "word": "이쁘",
+                            "adv": null
+                        }
+                    ],
+                    "complement": null,
+                    "with": null,
+                    "indirectobject": null,
+                    "directobject": null,
+                    "whereend": null,
+                    "wherestart": null,
+                    "how": null,
+                    "why": "?",
+                    "time": "?",
+                    "subject": {
+                        "type": "NNG",
+                        "word": "꽃",
+                        "adv": null
+                    }
+                }
+            ]
+        },
+        "whereend": null,
+        "wherestart": null,
+        "how": null,
+        "why": "?",
+        "time": "?",
+        "subject": {
+            "type": null,
+            "word": "?",
+            "adv": null
+        }
+    }
+}
+```
+
+전체폼
+```JSON
+{
+    "log":          "인식한 시간",
+    "raw":          "입력된 문장",
+    "morpheme":     [ "형태소 분리된 문장" ],
+    "reversed":     [ "분리된 문장을 역순으로" ],
+    "sentencetype": "statement(평서문) | question(의문문) | exclamation(감탄문) | command(명령문)",
+    "predicate":    {}
+}
+```
+
+서술어 폼
+```JSON
+{
+    "tense":        "시제",
+    "adj":          "보조 동사",
+    "type":         "동사 | 형용사",
+    "word":         "형태소 분할된 단어",
+    "adv":          [ "형용사", "부사", "등" ],
+    "complement":   "주격 보어 | 목적격 보어",
+    "with":         "함께",
+    "indirectobject": "간접 목적어",
+    "directobject": "직접 목적어",
+    "whereend":     "행동이 끝나는 위치",
+    "wherestart":   "행동이 시작되는 위치",
+    "how":          "방법",
+    "why":          "이유",
+    "time":         "시간",
+    "subject":      "주어"
+}
+```
+
+나머지
+```JSON
+{
+    "type":         "품사",
+    "word":         "단어",
+    "adv":          [ "형용사", "부사", "등" ],
+}
+```
+
+위와 같이 형식을 만들어보는 것은 어떤 가 해서 생각해 보았습니다.
+모든 조사를 생략하지 않는 다는 조건 하에, 동사를 꾸미는 형용사나 목적어로 완성된 문장이 오는 겹문장에 대한 예외를 해결할 수 있을 거라 생각했습니다.
+
+주요소를 추출하는 방식을 다양하게 변경하는 이유는 데이터셋을 만드는 게 너무 힘든 나머지 알고리즘으로 해결하고자 여 방법을 써보고 있는 중입니다.
 
 ## 21.12.29
 주요소 추출하는 방식을 인공지능에서 단순 쿼리로 변경하였습니다.
