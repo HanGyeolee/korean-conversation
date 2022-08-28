@@ -104,12 +104,10 @@ class Tokenizer():
         if string != "":
             if justToken:
                 self.splited_morpheme = string
-                self.whole = [self.__match(inner) for inner in self.splited_morpheme]
-                self.tokens = [data[1] for data in self.whole]
             else:
                 self.spliter(string, allattrs)
                 
-                self.whole = [self.__match(inner) for inner in self.splited_morpheme]
-                self.tokens = [data[1] for data in self.whole]
+            self.whole = [self.__match(inner) for inner in self.splited_morpheme]
+            self.tokens = [data[1] for data in self.whole]
         else:
             print("입력이 없습니다.")

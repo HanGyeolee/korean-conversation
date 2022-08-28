@@ -73,7 +73,9 @@ class Principler():
     def getMainPartbyVerb(self, string):
         v = self.getVerb(string)
         try:
-            return v, self.__dict[v]
+            returns = self.__dict[v]
+            returns["V"] = v
+            return returns
         except KeyError: # string  값에 따라서 0 혹은 1 이
             #string 에 들어있는 element에 따라 v를 선택한다.
             print("여러 단어 뜻 구분")
@@ -94,7 +96,9 @@ class Principler():
                 except:
                     break
             
-            return v+str(result), self.__dict[v+str(result)]
+            returns = self.__dict[v+str(result)]
+            returns["V"] = v+str(result)
+            return returns 
     
     # 문장에서 주요소 추출하기
     def extractMainPart(self, base, string):
@@ -105,7 +109,7 @@ class Principler():
                         if key == "T":
                             base[key] = word
                             string[idx] = ""
-                        else:
+                        elif "?" in base[key]:
                             base[key] = string[idx - 1]
                             string[idx - 1] = ""
         
@@ -131,8 +135,7 @@ class Principler():
                     string[idx] = ""
         
         return base
-        
-        
+         
     def CompareDictionary(self, dict1, list1):
         b = True
         b &= dict1['S'] == list1[0]
