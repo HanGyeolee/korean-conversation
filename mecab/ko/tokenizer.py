@@ -64,6 +64,10 @@ class Tokenizer():
                     return [v, self.__dict["${mark}/SF"]]
                 elif 'EF' in v: # 종결어미도 다 묶어서 같은 토큰으로 친다.
                     return [v, self.__dict["${end}/EF"]]
+                elif 'SL' in v: # 영어도 다 묶어서 같은 토큰으로 친다.
+                    return [v, self.__dict["${english}/SL"]]
+                elif 'SY' in v: # 특수문자도 다 묶어서 같은 토큰으로 친다.
+                    return [v, self.__dict["${special}/SY"]]
                 return [v, self.__dict[v]]
             except :
                 if self.update & ('ㅓ/EC' not in v):

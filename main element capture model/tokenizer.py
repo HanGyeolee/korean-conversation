@@ -33,7 +33,12 @@ class Tokenizer():
             self.__dict = {}
             
             for index, line in enumerate(lines): #list 보다 dictionary의 query 속도가 빠르다.
-                self.__dict[line] = index+1
+                if ',' in line:
+                    splited = line.split(',')
+                    key = splited[0]
+                else:
+                    key = line
+                self.__dict[key] = index+1
                 self.__index = index+1
                 
             f.close()
@@ -64,9 +69,13 @@ class Tokenizer():
                     return [v, self.__dict["${mark}/SF"]]
                 elif 'EF' in v: # 종결어미도 다 묶어서 같은 토큰으로 친다.
                     return [v, self.__dict["${end}/EF"]]
+                elif 'SL' in v: # 영어도 다 묶어서 같은 토큰으로 친다.
+                    return [v, self.__dict["${english}/SL"]]
+                elif 'SY' in v: # 특수문자도 다 묶어서 같은 토큰으로 친다.
+                    return [v, self.__dict["${special}/SY"]]
                 return [v, self.__dict[v]]
             except :
-                if self.update & ('ㅓ/EC' not in v):
+                if self.update:
                     f = open(self.dicpath, 'a', encoding='utf-8')
                     f.write(v +'\n')
                     f.close()
@@ -75,7 +84,7 @@ class Tokenizer():
                     self.__dict[v] = self.__index
                         
                     return [v, self.__index]
-                return [v, -1]
+                return [v, 0]
     def spliter(self, string, allattrs=False):
         if string != "":
             self.morpheme = self.__mecab.pos(string, join=True, allattrs=allattrs)

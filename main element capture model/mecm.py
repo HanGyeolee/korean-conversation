@@ -23,7 +23,7 @@ class MECM(nn.Module):
                  hidden_dim=8, 
                  n_layers=64, 
                  dropout = 0.25,
-                 output_dim=13, 
+                 output_dim=14, 
                  bidirectional=True):
         super(MECM, self).__init__()
         
@@ -60,7 +60,7 @@ class StructureDataset(Dataset):
         self.tokenizer = tokenizer
         self.maxsize = maxsize
         
-        self.dict_main_element = {'PAD':0,'EOF':1,'V':2,'S':3,'T':4,'Wy':5,'H':6,'WS':7,'WE':8,'DO':9,'IO':10,'Wi':11,'CO':12}
+        self.dict_main_element = {'PAD':0,'EOF':1,'V':2,'S':3,'T':4,'Wy':5,'H':6,'WS':7,'WE':8,'DO':9,'IO':10,'Wi':11,'CO':12,'Adv':13}
     
     def __len__(self):
         return len(self.datas)
@@ -79,8 +79,9 @@ class StructureDataset(Dataset):
         if self.tokenizer:
             self.tokenizer.tokenizing(texts, justToken=True)
             texts = self.tokenizer.tokens
-        result = [self.dict_main_element[char] for char in result]      
+        result = [self.dict_main_element[char] for char in result]    
         
+        # 모든 출력의 길이가 동일해야함
         blank = [0]*(self.maxsize - length)
         texts += blank
         result += blank

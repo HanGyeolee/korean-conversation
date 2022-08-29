@@ -27,10 +27,9 @@ SEED = 20220826
 random.seed(SEED)
 torch.manual_seed(SEED)
 
-batch_size = 39
-
 MAX_SEN = 512
-VOCAB_SIZE = tokenizer.getMax() + 1
+#현재 단어는 634409개 이것보다 크게 잡은 이유는 나중에 단어 추가될 것을 대비
+VOCAB_SIZE = 655350
 EMBEDDING_DIM = 43
 HIDDEN_DIM = 8
 N_LAYERS = 64
@@ -39,6 +38,8 @@ DROPOUT = 0.25
 # csv 파일로 학습 데이터 가져오기
 train_data = StructureDataset(maxsize=MAX_SEN, csv_file='elemen_train_dataset.csv', tokenizer=tokenizer)
 length = len(train_data)
+
+batch_size = 100
 
 train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
     
@@ -55,10 +56,11 @@ def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 print(f'The model has {count_parameters(model):,} trainable parameters')
-optimizer = optim.Adam(model.parameters())
+optimizer = optim.AdamW(model.parameters())
 criterion = nn.NLLLoss(ignore_index = 0)
 
 e_epoch = 0;
+# 기존 모델 불러오기
 if os.path.exists(PATH):
     checkpoint = torch.load(PATH)
     model.load_state_dict(checkpoint['model_state_dict'])
@@ -82,9 +84,8 @@ def train(epoch):
                 prediction = model(sentence) # sentences.squeeze()
                 loss = criterion(prediction, tag) # tags.squeeze()
                 
-            scaler.scale(loss / batch_size).backward()
-            
             #loss.backward()
+            scaler.scale(loss / batch_size).backward()
             
             ll = loss.data.cpu().numpy()
                 
@@ -106,44 +107,37 @@ def train(epoch):
             
         scaler.step(optimizer)
         scaler.update()
+        optimizer.zero_grad()
         model.zero_grad()
             
-        del sentences
-        del tags
         torch.cuda.empty_cache()
 
-if True or ~(os.path.exists(PATH)):
+if True or not (os.path.exists(PATH)):
     #try:
-    for epoch in range(6000):
-       train(epoch + e_epoch)
+    for epoch in range(2000):
+        e_epoch += 1
+        train(e_epoch)
     #except:
     #    pass
     
     torch.save({
-        'epoch':6000 + e_epoch,
+        'epoch':e_epoch,
         'model_state_dict':model.state_dict(),
         'optimizer_state_dict':optimizer.state_dict()
                 }, PATH)
-else:
-    checkpoint = torch.load(PATH)
-    model.load_state_dict(checkpoint['model_state_dict'])
-    optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-    del checkpoint
 
+# 결과 테스트 
 string = input("입력:")
 now = datetime.datetime.now()
 print(now.strftime('%Y.%m.%d.%w.%H:%M:%S.%f'))
 
-# 토크나이징
 tokenizer.tokenizing(string, allattrs=False)
 tokens = tokenizer.tokens
-print(len(tokens))
-print(tokens)
 
-prediction = model(torch.tensor(tokens))
+prediction = model(torch.tensor(tokens).cuda())
 
 def getstructure(prediction):
-    dict_element = {0:'PAD',1:'EOF',2:'V',3:'S',4:'T',5:'Wy',6:'H',7:'WS',8:'WE',9:'DO',10:'IO',11:'Wi',12:'CO'}
+    dict_element = {0:'PAD',1:'EOF',2:'V',3:'S',4:'T',5:'Wy',6:'H',7:'WS',8:'WE',9:'DO',10:'IO',11:'Wi',12:'CO',13:'Adv'}
     structure = prediction.tolist()
     for i, sub in enumerate(structure):
         structure[i] = sub.index(max(sub))

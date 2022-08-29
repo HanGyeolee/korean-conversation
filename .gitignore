@@ -16,3 +16,4 @@ mecab/ko/AddData.py
 mecab/ko/AddVerb.py
 
 main element capture model/dataset.*/
+main element capture model/AddData.py
