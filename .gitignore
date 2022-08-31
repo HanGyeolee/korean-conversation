@@ -11,6 +11,9 @@
 # ai
 *.pt
 
+#.folder
+.*/
+
 mecab/ko/tagger_creater.py
 mecab/ko/AddData.py
 mecab/ko/AddVerb.py
