@@ -22,10 +22,10 @@ while True:
     tokenizer.tokenizing(string, allattrs=False)
     #tokenizer.spliter(string, allattrs=True)
     #print(tokenizer.inputstring)
-    #print(tokenizer.morpheme)
-    print(len(tokenizer.splited_morpheme))
+    print(tokenizer.morpheme)
+    #print(len(tokenizer.splited_morpheme))
     print(tokenizer.splited_morpheme)
-    #print(tokenizer.whole)
+    print(tokenizer.whole)
     print(tokenizer.tokens)
 
 # 동사를 이용한 정보 배제
